@@ -11,8 +11,10 @@
         :root {
             --neon-red: #ff003c;
             --neon-blue: #00e5ff;
-            --bg-color: #050505;
-            --box-bg: #111111;
+            --bg-color: #030303;
+            --box-bg: rgba(17, 17, 17, 0.7); /* خلفية شبه شفافة */
+            --text-soft: #e6e6e6;
+            --surface-border: rgba(255, 255, 255, 0.08);
         }
 
         /* ================= الإعدادات العامة ================= */
@@ -21,12 +23,76 @@
             color: #ffffff;  
             text-align: center;  
             font-family: 'Tajawal', Tahoma, Geneva, Verdana, sans-serif;  
-            padding: 20px;
+            padding: 40px 20px;
             overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 15% 50%, rgba(255, 0, 60, 0.08), transparent 25%),
-                radial-gradient(circle at 85% 30%, rgba(0, 229, 255, 0.08), transparent 25%);
+            position: relative;
+            margin: 0;
+            scroll-behavior: smooth;
         } 
+        
+        /* تأثير مؤشر الماوس المضيء (عبر JS) */
+        .cursor-glow {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            mix-blend-mode: screen;
+        }
+
+        /* ================= الخلفية المتحركة ================= */
+        #particles-js {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            top: 0;
+            left: 0;
+            z-index: -2;
+            background: #030303;
+        }
+
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background: radial-gradient(circle at 50% 50%, transparent 0%, rgba(0,0,0,0.8) 100%);
+            pointer-events: none;
+        }
+
+        .bg-animation::before, .bg-animation::after {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            filter: blur(120px);
+            animation: float-slow 15s ease-in-out infinite alternate;
+            opacity: 0.4;
+        }
+
+        .bg-animation::before {
+            background: var(--neon-red);
+            top: -10%;
+            left: -10%;
+        }
+
+        .bg-animation::after {
+            background: var(--neon-blue);
+            bottom: -10%;
+            right: -10%;
+            animation-delay: -7s;
+        }
+
+        @keyframes float-slow {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(100px, 100px) scale(1.2); }
+        }
          
         /* ================= الحركات (Animations) ================= */
         @keyframes float {
@@ -54,19 +120,28 @@
 
         /* ================= إطار معلومات الطالب ================= */
         .student-card {  
-            background: linear-gradient(145deg, #0a0a0a, #1a1a1a);  
+            background: linear-gradient(145deg, rgba(10,10,10,0.8), rgba(26,26,26,0.8));  
             color: #ffffff;  
-            padding: 25px;  
-            border-radius: 15px;  
+            padding: 30px;  
+            border-radius: 20px;  
             text-align: right;  
-            border: 2px solid var(--neon-blue);  
-            margin: 0 auto 35px auto; 
+            border: 1px solid var(--neon-blue);  
+            margin: 0 auto 50px auto; 
             max-width: 850px;
-            box-shadow: 0 0 20px rgba(0, 229, 255, 0.3); 
-            animation: slideIn 0.8s ease-out forwards;
+            box-shadow: 0 0 30px rgba(0, 229, 255, 0.2), inset 0 0 0 1px rgba(255,255,255,0.05); 
             position: relative;
             overflow: hidden;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease-out;
         } 
+        
+        .student-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
         .student-card::before {
             content: '';
@@ -85,53 +160,62 @@
         /* ================= العنوان الرئيسي ================= */
         h1 {  
             color: #ffffff;  
-            font-size: 45px; 
+            font-size: clamp(2rem, 4.8vw, 3rem);
             font-weight: 900;
             display: inline-block; 
-            margin-bottom: 40px; 
+            margin-bottom: 50px; 
             padding-bottom: 10px; 
-            animation: neon-pulse 2s infinite;
+            animation: neon-pulse 2.5s infinite;
             letter-spacing: 2px;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.8s ease-out;
         } 
+        
+        h1.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
  
-        /* ================= صناديق المحتوى (التصميم القديم المحسن) ================= */
+        /* ================= صناديق المحتوى ================= */
         .box {  
             background: var(--box-bg);  
-            margin: 30px auto;  
-            padding: 35px;  
-            border-radius: 15px;  
+            margin: 40px auto;  
+            padding: 40px;  
+            border-radius: 20px;  
             text-align: right;  
-            border: 2px solid #333; 
+            border: 1px solid var(--surface-border); 
             max-width: 850px; 
-            /* إضافة عمق حقيقي (3D Effect) للصندوق */
-            box-shadow: 8px 8px 0px var(--neon-red), -8px -8px 0px rgba(0, 229, 255, 0.2); 
-            transition: all 0.3s ease;
-            animation: slideIn 1s ease-out forwards;
-            opacity: 0;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,255,255,0.05);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
             z-index: 1;
+            /* Glassmorphism */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            /* إخفاء مبدئي للأنيميشن مع JS */
+            opacity: 0;
+            transform: translateY(50px) scale(0.95);
+            visibility: hidden;
         } 
-
-        .box:nth-child(even) {
-            box-shadow: -8px 8px 0px var(--neon-blue), 8px -8px 0px rgba(255, 0, 60, 0.2); 
+        
+        .box.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            visibility: visible;
         }
 
         .box:hover {
-            transform: translate(-4px, -4px);
-            box-shadow: 12px 12px 0px var(--neon-red), -12px -12px 0px rgba(0, 229, 255, 0.3);
+            transform: translateY(-8px) scale(1.02) !important;
+            border-color: rgba(255, 0, 60, 0.4);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.6), 0 0 20px rgba(255, 0, 60, 0.2);
+            z-index: 10;
         }
 
         .box:nth-child(even):hover {
-            transform: translate(4px, -4px);
-            box-shadow: -12px 12px 0px var(--neon-blue), 12px -12px 0px rgba(255, 0, 60, 0.3);
+            border-color: rgba(0, 229, 255, 0.4);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.6), 0 0 20px rgba(0, 229, 255, 0.2);
         }
-
-        /* تأخير الظهور للصناديق */
-        .box:nth-of-type(1) { animation-delay: 0.2s; }
-        .box:nth-of-type(2) { animation-delay: 0.4s; }
-        .box:nth-of-type(3) { animation-delay: 0.6s; }
-        .box:nth-of-type(4) { animation-delay: 0.8s; }
-        .box:nth-of-type(5) { animation-delay: 1.0s; }
  
         /* ================= تنسيق النصوص ================= */
         .red-text { 
@@ -150,19 +234,20 @@
  
         h3 {  
             color: #ffffff;  
-            font-size: 28px; 
+            font-size: clamp(1.35rem, 3vw, 1.8rem); 
             margin-top: 0; 
-            margin-bottom: 20px;
+            margin-bottom: 18px;
             border-bottom: 2px solid #333;
             padding-bottom: 10px;
             display: inline-block;
+            letter-spacing: 0.4px;
         } 
  
         p, li {  
-            font-size: 22px;  
-            line-height: 1.8;  
-            color: #dddddd;
-            margin-bottom: 15px;
+            font-size: clamp(1rem, 2.1vw, 1.28rem);  
+            line-height: 1.9;  
+            color: var(--text-soft);
+            margin-bottom: 12px;
         } 
 
         ul {
@@ -171,35 +256,91 @@
  
         /* ================= تنسيق الصور ================= */
         .img-box {  
-            width: 90%;  
+            width: 100%;  
             max-width: 600px; 
             height: 350px;
             object-fit: cover;
-            border: 3px solid var(--neon-red);  
-            border-radius: 12px;  
-            margin-top: 25px; 
+            border: 2px solid var(--neon-red);  
+            border-radius: 16px;  
+            margin-top: 30px; 
             display: block; 
             margin-left: auto; 
             margin-right: auto; 
-            box-shadow: 0 0 15px rgba(255,0,60,0.4);
-            animation: float 4s ease-in-out infinite;
-            transition: transform 0.3s, border-color 0.3s;
+            box-shadow: 0 10px 25px rgba(255,0,60,0.3);
+            animation: float 5s ease-in-out infinite;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.4s;
         } 
 
         .box:nth-child(even) .img-box {
             border-color: var(--neon-blue);
-            box-shadow: 0 0 15px rgba(0,229,255,0.4);
-            animation-delay: 1s; /* لكي لا تطفو كل الصور في نفس الوقت */
+            box-shadow: 0 10px 25px rgba(0,229,255,0.3);
+            animation-delay: 1.5s; 
         }
 
         .img-box:hover {
-            transform: scale(1.05);
+            transform: scale(1.08) translateY(-5px);
             animation-play-state: paused;
+            z-index: 5;
+        }
+
+        /* تحسين مظهر الخاتمة بدون تغيير الهيكل */
+        .box--conclusion {
+            text-align: center;
+            animation: border-dance 3s infinite;
+            border-width: 2px;
+        }
+
+        .box--conclusion h3 {
+            border: none;
+            margin-bottom: 0;
+        }
+
+        .box--conclusion p {
+            margin-top: 15px;
+        }
+
+        /* ================= تحسين الجوال ================= */
+        @media (max-width: 768px) {
+            body {
+                padding: 16px 10px 28px;
+            }
+
+            .student-card {
+                padding: 18px 16px;
+                border-radius: 14px;
+            }
+
+            .box {
+                padding: 18px;
+                margin: 18px auto;
+                box-shadow: 5px 5px 0px rgba(255, 0, 60, 0.78), -5px -5px 0px rgba(0, 229, 255, 0.2), 0 10px 20px rgba(0, 0, 0, 0.4);
+            }
+
+            .box:nth-child(even) {
+                box-shadow: -5px 5px 0px rgba(0, 229, 255, 0.82), 5px -5px 0px rgba(255, 0, 60, 0.22), 0 10px 20px rgba(0, 0, 0, 0.4);
+            }
+
+            .box:hover,
+            .box:nth-child(even):hover {
+                transform: translateY(-4px);
+            }
+
+            .bg-animation::before,
+            .bg-animation::after {
+                width: 210px;
+                height: 210px;
+                filter: blur(75px);
+            }
         }
     </style> 
 </head> 
 <body> 
- 
+    <!-- خلفية الجزيئات المتطايرة (Particles) -->
+    <div id="particles-js"></div>
+
+    <!-- الخلفية المتحركة -->
+    <div class="bg-animation"></div>
+
     <!-- بطاقة معلومات الطالب -->
     <div class="student-card"> 
         <p>👤 <span class="white-text">الاسم واللقب:</span> <strong class="blue-text">عماد الدين طواهرية</strong></p> 
@@ -247,10 +388,83 @@
     </div> 
  
     <!-- الصندوق الخامس (الخاتمة) -->
-    <div class="box" style="animation: border-dance 3s infinite; text-align: center;"> 
+    <div class="box box--conclusion" style="animation: border-dance 3s infinite;"> 
         <h3 style="border: none; margin-bottom: 0;">🏁 خاتمة البحث</h3> 
         <p class="white-text" style="margin-top: 15px;">الملاكمة هي مزيج بين القوة البدنية والذكاء التكتيكي، وهي مدرسة حقيقية في الأخلاق الرياضية.</p> 
     </div> 
  
+    <!-- Particles.js -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <script>
+        // 1. تأثير إضاءة الماوس
+        const cursorGlow = document.createElement('div');
+        cursorGlow.classList.add('cursor-glow');
+        document.body.appendChild(cursorGlow);
+
+        document.addEventListener('mousemove', (e) => {
+            cursorGlow.style.left = e.clientX + 'px';
+            cursorGlow.style.top = e.clientY + 'px';
+        });
+
+        // 2. تأثير ظهور الصناديق عند التمرير (Scroll Reveal)
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // مراقبة جميع العناصر التي نريد إظهارها
+        document.querySelectorAll('.box, .student-card, h1').forEach((el) => {
+            observer.observe(el);
+        });
+
+        // 3. تأثير 3D خفيف للصناديق عند تحريك الماوس فوقها
+        document.querySelectorAll('.box').forEach(box => {
+            box.addEventListener('mousemove', (e) => {
+                const rect = box.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = ((y - centerY) / centerY) * -5;
+                const rotateY = ((x - centerX) / centerX) * 5;
+                
+                box.style.transform = `translateY(-8px) scale(1.02) perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+            
+            box.addEventListener('mouseleave', () => {
+                box.style.transform = 'translateY(0) scale(1) perspective(1000px) rotateX(0) rotateY(0)';
+            });
+        });
+
+        // 4. تشغيل خلفية الجزيئات (Particles)
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 60, density: { enable: true, value_area: 800 } },
+                color: { value: ["#ff003c", "#00e5ff"] },
+                shape: { type: "circle" },
+                opacity: { value: 0.3, random: true, anim: { enable: true, speed: 1, opacity_min: 0.1, sync: false } },
+                size: { value: 3, random: true, anim: { enable: true, speed: 2, size_min: 0.1, sync: false } },
+                line_linked: { enable: false },
+                move: { enable: true, speed: 1, direction: "top", random: true, straight: false, out_mode: "out", bounce: false }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: { onhover: { enable: true, mode: "bubble" }, onclick: { enable: false }, resize: true },
+                modes: { bubble: { distance: 200, size: 6, duration: 2, opacity: 0.8, speed: 3 } }
+            },
+            retina_detect: true
+        });
+    </script>
 </body> 
 </html>
