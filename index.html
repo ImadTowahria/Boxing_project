@@ -1,375 +1,256 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
+<!DOCTYPE html> 
+<html lang="ar" dir="rtl"> 
+<head> 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>عالم الملاكمة الاحترافي</title>
     <!-- استيراد خط تجوال العربي -->
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
-    
-    <style>
-        /* المتغيرات الأساسية للألوان المحسنة */
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+    <style> 
+        /* ================= المتغيرات لألوان النيون ================= */
         :root {
-            --primary-color: #e61025; /* أحمر أكثر سطوعاً وحيوية */
-            --primary-glow: rgba(230, 16, 37, 0.4);
-            --dark-bg: #0a0a0a; /* أسود عميق */
-            --card-bg: #141414; /* رمادي داكن للصناديق */
-            --gold-accent: #f5b700; /* ذهبي لامع */
-            --text-light: #ffffff;
-            --text-muted: #c2c2c2;
+            --neon-red: #ff003c;
+            --neon-blue: #00e5ff;
+            --bg-color: #050505;
+            --box-bg: #111111;
         }
 
-        /* الإعدادات الأساسية */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Tajawal', sans-serif;
-        }
-
-        body {
-            background-color: var(--dark-bg);
-            color: var(--text-light);
-            line-height: 1.7;
+        /* ================= الإعدادات العامة ================= */
+        body {  
+            background-color: var(--bg-color);  
+            color: #ffffff;  
+            text-align: center;  
+            font-family: 'Tajawal', Tahoma, Geneva, Verdana, sans-serif;  
+            padding: 20px;
             overflow-x: hidden;
-            /* خلفية بتدرج شعاعي أنيق يعطي عمقاً للصفحة */
-            background-image: radial-gradient(circle at 50% -10%, #290508 0%, var(--dark-bg) 60%);
-            background-attachment: fixed;
-        }
-
-        /* الحاوية الرئيسية */
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 30px 20px;
-        }
-
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(255, 0, 60, 0.08), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(0, 229, 255, 0.08), transparent 25%);
+        } 
+         
         /* ================= الحركات (Animations) ================= */
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(50px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes pulse-glow {
-            0% { box-shadow: 0 0 0 0 var(--primary-glow); }
-            70% { box-shadow: 0 0 0 20px rgba(230, 16, 37, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(230, 16, 37, 0); }
-        }
-
-        @keyframes float-img {
+        @keyframes float {
             0% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
+            50% { transform: translateY(-10px); }
             100% { transform: translateY(0px); }
         }
 
-        /* ================= بطاقة الطالب ================= */
-        .student-card {
-            background: linear-gradient(135deg, var(--card-bg), #000000);
-            border-right: 5px solid var(--primary-color);
-            padding: 25px 30px;
-            border-radius: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-bottom: 40px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-            border-top: 1px solid rgba(255,255,255,0.05);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        @keyframes neon-pulse {
+            0% { text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px var(--neon-red), 0 0 40px var(--neon-red); }
+            50% { text-shadow: 0 0 2px #fff, 0 0 5px #fff, 0 0 10px var(--neon-red), 0 0 20px var(--neon-red); }
+            100% { text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 20px var(--neon-red), 0 0 40px var(--neon-red); }
         }
 
-        .student-info p {
-            font-size: 1.15rem;
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        @keyframes border-dance {
+            0% { border-color: var(--neon-red); box-shadow: 0 0 15px var(--neon-red); }
+            50% { border-color: var(--neon-blue); box-shadow: 0 0 15px var(--neon-blue); }
+            100% { border-color: var(--neon-red); box-shadow: 0 0 15px var(--neon-red); }
         }
 
-        .student-info span {
-            color: var(--text-muted);
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .student-info strong {
-            color: var(--gold-accent);
-            font-size: 1.25rem;
-            text-shadow: 0 0 10px rgba(245, 183, 0, 0.2);
-        }
-
-        /* ================= العنوان الرئيسي ================= */
-        h1 {
-            text-align: center;
-            font-size: 3.5rem;
-            color: var(--text-light);
-            margin: 50px 0;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            position: relative;
-            animation: fadeUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-            animation-delay: 0.2s;
-            opacity: 0;
-            text-shadow: 0 5px 15px rgba(0,0,0,0.5);
-        }
-
-        h1::after {
-            content: '';
-            display: block;
-            width: 80px;
-            height: 5px;
-            background: var(--primary-color);
-            margin: 20px auto 0;
-            border-radius: 3px;
-            box-shadow: 0 0 15px var(--primary-color);
-        }
-
-        /* ================= شبكة المحتوى (الصناديق) ================= */
-        .content-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 35px;
-        }
-
-        .box {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 35px;
-            border: 1px solid rgba(255,255,255,0.03);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        /* ================= إطار معلومات الطالب ================= */
+        .student-card {  
+            background: linear-gradient(145deg, #0a0a0a, #1a1a1a);  
+            color: #ffffff;  
+            padding: 25px;  
+            border-radius: 15px;  
+            text-align: right;  
+            border: 2px solid var(--neon-blue);  
+            margin: 0 auto 35px auto; 
+            max-width: 850px;
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.3); 
+            animation: slideIn 0.8s ease-out forwards;
             position: relative;
             overflow: hidden;
+        } 
+
+        .student-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.2), transparent);
+            transform: skewX(-20deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            100% { left: 200%; }
+        }
+ 
+        /* ================= العنوان الرئيسي ================= */
+        h1 {  
+            color: #ffffff;  
+            font-size: 45px; 
+            font-weight: 900;
+            display: inline-block; 
+            margin-bottom: 40px; 
+            padding-bottom: 10px; 
+            animation: neon-pulse 2s infinite;
+            letter-spacing: 2px;
+        } 
+ 
+        /* ================= صناديق المحتوى (التصميم القديم المحسن) ================= */
+        .box {  
+            background: var(--box-bg);  
+            margin: 30px auto;  
+            padding: 35px;  
+            border-radius: 15px;  
+            text-align: right;  
+            border: 2px solid #333; 
+            max-width: 850px; 
+            /* إضافة عمق حقيقي (3D Effect) للصندوق */
+            box-shadow: 8px 8px 0px var(--neon-red), -8px -8px 0px rgba(0, 229, 255, 0.2); 
+            transition: all 0.3s ease;
+            animation: slideIn 1s ease-out forwards;
             opacity: 0;
-            animation: fadeUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            position: relative;
+            z-index: 1;
+        } 
+
+        .box:nth-child(even) {
+            box-shadow: -8px 8px 0px var(--neon-blue), 8px -8px 0px rgba(255, 0, 60, 0.2); 
         }
 
         .box:hover {
-            transform: translateY(-12px);
-            box-shadow: 0 25px 50px rgba(230, 16, 37, 0.15);
-            border-color: rgba(230, 16, 37, 0.4);
+            transform: translate(-4px, -4px);
+            box-shadow: 12px 12px 0px var(--neon-red), -12px -12px 0px rgba(0, 229, 255, 0.3);
         }
 
-        /* توقيت ظهور الصناديق بالتدريج */
-        .box:nth-child(1) { animation-delay: 0.4s; }
-        .box:nth-child(2) { animation-delay: 0.6s; }
-        .box:nth-child(3) { animation-delay: 0.8s; }
-        .box:nth-child(4) { animation-delay: 1.0s; }
-        .box:nth-child(5) { animation-delay: 1.2s; }
-
-        /* خط زينة علوي للصندوق يظهر عند التمرير */
-        .box::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
-            opacity: 0;
-            transition: opacity 0.4s ease;
+        .box:nth-child(even):hover {
+            transform: translate(4px, -4px);
+            box-shadow: -12px 12px 0px var(--neon-blue), 12px -12px 0px rgba(255, 0, 60, 0.3);
         }
 
-        .box:hover::before {
-            opacity: 1;
+        /* تأخير الظهور للصناديق */
+        .box:nth-of-type(1) { animation-delay: 0.2s; }
+        .box:nth-of-type(2) { animation-delay: 0.4s; }
+        .box:nth-of-type(3) { animation-delay: 0.6s; }
+        .box:nth-of-type(4) { animation-delay: 0.8s; }
+        .box:nth-of-type(5) { animation-delay: 1.0s; }
+ 
+        /* ================= تنسيق النصوص ================= */
+        .red-text { 
+            color: var(--neon-red); 
+            font-weight: bold; 
+            text-shadow: 0 0 5px rgba(255,0,60,0.5);
+        } 
+        .blue-text { 
+            color: var(--neon-blue); 
+            font-weight: bold; 
+            text-shadow: 0 0 5px rgba(0,229,255,0.5);
+        } 
+        .white-text { 
+            color: #ffffff; 
         }
-
-        h3 {
-            color: var(--primary-color);
-            font-size: 1.9rem;
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-        }
-
-        .box p {
-            font-size: 1.2rem;
+ 
+        h3 {  
+            color: #ffffff;  
+            font-size: 28px; 
+            margin-top: 0; 
+            margin-bottom: 20px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+            display: inline-block;
+        } 
+ 
+        p, li {  
+            font-size: 22px;  
+            line-height: 1.8;  
+            color: #dddddd;
             margin-bottom: 15px;
-            color: var(--text-muted);
-        }
+        } 
 
-        /* ================= تمييز النصوص داخل الصناديق ================= */
-        .highlight {
-            color: var(--text-light);
-            font-weight: 800;
-            background: rgba(255,255,255,0.05);
-            padding: 2px 8px;
-            border-radius: 4px;
-        }
-
-        .danger {
-            color: #ff4d4d;
-            font-weight: 800;
-        }
-
-        .benefit {
-            color: var(--gold-accent);
-            font-weight: 800;
-        }
-
-        /* ================= القوائم ================= */
         ul {
-            list-style: none;
-            margin-top: 20px;
+            padding-right: 20px;
         }
-
-        ul li {
-            font-size: 1.15rem;
-            margin-bottom: 18px;
-            padding-right: 30px;
-            position: relative;
-            color: var(--text-muted);
-        }
-
-        ul li::before {
-            content: '🥊';
-            position: absolute;
-            right: 0;
-            top: 2px;
-            font-size: 1rem;
-            filter: drop-shadow(0 0 2px rgba(230,16,37,0.5));
-        }
-
-        /* ================= الصور ================= */
-        .img-container {
-            margin-top: 30px;
-            border-radius: 15px;
-            overflow: hidden;
-            position: relative;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.6);
-            border: 2px solid rgba(255,255,255,0.05);
-            transition: border-color 0.4s ease;
-        }
-
-        .box:hover .img-container {
-            border-color: var(--primary-color);
-        }
-
-        .img-container::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            box-shadow: inset 0 0 25px rgba(0,0,0,0.6);
-            pointer-events: none;
-        }
-
-        .img-box {
-            width: 100%;
+ 
+        /* ================= تنسيق الصور ================= */
+        .img-box {  
+            width: 90%;  
+            max-width: 600px; 
             height: 350px;
             object-fit: cover;
-            display: block;
-            transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
-            animation: float-img 6s ease-in-out infinite;
+            border: 3px solid var(--neon-red);  
+            border-radius: 12px;  
+            margin-top: 25px; 
+            display: block; 
+            margin-left: auto; 
+            margin-right: auto; 
+            box-shadow: 0 0 15px rgba(255,0,60,0.4);
+            animation: float 4s ease-in-out infinite;
+            transition: transform 0.3s, border-color 0.3s;
+        } 
+
+        .box:nth-child(even) .img-box {
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 15px rgba(0,229,255,0.4);
+            animation-delay: 1s; /* لكي لا تطفو كل الصور في نفس الوقت */
         }
 
-        /* إيقاف الطفو عند التمرير وتكبير الصورة بدلاً من ذلك */
-        .box:hover .img-box {
-            transform: scale(1.08);
+        .img-box:hover {
+            transform: scale(1.05);
             animation-play-state: paused;
         }
+    </style> 
+</head> 
+<body> 
+ 
+    <!-- بطاقة معلومات الطالب -->
+    <div class="student-card"> 
+        <p>👤 <span class="white-text">الاسم واللقب:</span> <strong class="blue-text">عماد الدين طواهرية</strong></p> 
+        <p>🏫 <span class="white-text">القسم:</span> <strong class="blue-text">أولى علوم 2</strong></p> 
+        <p>🥊 <span class="white-text">المشروع:</span> <strong class="blue-text">بحث مفصل حول رياضة الملاكمة</strong></p> 
+    </div> 
+ 
+    <h1>عالم الملاكمة الاحترافي</h1> 
+ 
+    <!-- الصندوق الأول -->
+    <div class="box"> 
+        <h3 style="border-bottom-color: var(--neon-red);">🥊 تعريف الملاكمة (الفن النبيل)</h3> 
+        <p class="white-text">الملاكمة هي رياضة قتالية عريقة تعتمد على استخدام القبضات فقط للدفاع والهجوم.</p> 
+        <p class="red-text">تتطلب هذه الرياضة تركيزاً ذهنياً عالياً جداً، حيث يجب على الملاكم قراءة حركات خصمه في أجزاء من الثانية.</p> 
+        <img src="images/gloves.jpg" class="img-box" alt="قفازات ملاكمة"> 
+    </div> 
+ 
+    <!-- الصندوق الثاني -->
+    <div class="box"> 
+        <h3 style="border-bottom-color: var(--neon-blue);">⚠️ مخاطر وأضرار الملاكمة بالتفصيل</h3> 
+        <p class="white-text">رغم شعبيتها، إلا أن للملاكمة جوانب سلبية ومخاطر صحية يجب أخذها بعين الاعتبار:</p> 
+        <ul> 
+            <li class="blue-text">الإصابات الجسدية: مثل الكدمات القوية، نزيف الأنف، وكسور في عظام اليد أو الوجه.</li> 
+            <li class="white-text">تأثير الضربات على الرأس: قد تؤدي الضربات المتتالية إلى ارتجاج في المخ أو مشاكل صحية طويلة الأمد.</li> 
+            <li class="blue-text">الإجهاد البدني: تتطلب الملاكمة مجهوداً عضلياً جباراً قد يؤدي إلى إرهاق القلب والمفاصل إذا لم تكن هناك راحة كافية.</li> 
+        </ul> 
+        <img src="images/boxer.jpg" class="img-box" alt="ملاكم"> 
+    </div> 
+ 
+    <!-- الصندوق الثالث -->
+    <div class="box"> 
+        <h3 style="border-bottom-color: var(--neon-red);">🌟 فوائد الملاكمة للجسم والعقل</h3> 
+        <p class="red-text">بناء الشخصية: تعلم الملاكم الصبر، الانضباط، والتحكم في النفس عند الغضب.</p> 
+        <p class="white-text">اللياقة البدنية: تعتبر من أفضل الرياضات لحرق السعرات الحرارية وتقوية عضلات الجسم والجهاز التنفسي.</p> 
+        <p class="red-text">الدفاع عن النفس: تمنح ممارسها مهارات قتالية فعالة جداً وثقة كبيرة بالنفس في مواجهة المخاطر.</p> 
+        <img src="images/me1.jpg" class="img-box" alt="البطل عماد الدين يتدرب"> 
+    </div> 
 
-        /* ================= الخاتمة ================= */
-        .conclusion {
-            text-align: center;
-            background: linear-gradient(135deg, #4a050d, #1a0204);
-            border: 1px solid var(--primary-color);
-            color: white;
-            animation: fadeUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards, pulse-glow 3s infinite;
-            animation-delay: 1.2s; /* تأخير الدخول */
-        }
-
-        .conclusion h3 {
-            color: white;
-            justify-content: center;
-            text-shadow: 0 0 15px var(--primary-glow);
-        }
-
-        .conclusion p {
-            color: rgba(255,255,255,0.95);
-            font-size: 1.4rem;
-            font-weight: bold;
-        }
-
-        /* ================= الشاشات الكبيرة ================= */
-        @media (min-width: 850px) {
-            .content-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .conclusion {
-                grid-column: 1 / -1;
-            }
-            /* جعل صندوق الباحث يأخذ عرضاً كاملاً إذا أردت، لكن تركناه في الشبكة ليكون متناسقاً */
-        }
-    </style>
-</head>
-<body>
-
-    <div class="container">
-        <!-- بطاقة الطالب -->
-        <div class="student-card">
-            <div class="student-info">
-                <p>👤 <span>الاسم واللقب:</span> <strong>عماد الدين طواهرية</strong></p>
-                <p>🏫 <span>القسم:</span> <strong>أولى علوم 2</strong></p>
-                <p>🥊 <span>المشروع:</span> <strong>بحث مفصل حول رياضة الملاكمة</strong></p>
-            </div>
-        </div>
-
-        <h1>عالم الملاكمة الاحترافي</h1>
-
-        <div class="content-grid">
-            
-            <!-- الصندوق الأول -->
-            <div class="box">
-                <h3>🥊 تعريف الملاكمة (الفن النبيل)</h3>
-                <p><span class="highlight">الملاكمة</span> هي رياضة قتالية عريقة تعتمد على استخدام القبضات فقط للدفاع والهجوم.</p>
-                <p>تتطلب هذه الرياضة <span class="danger">تركيزاً ذهنياً عالياً جداً</span>، حيث يجب على الملاكم قراءة حركات خصمه في أجزاء من الثانية.</p>
-                <div class="img-container">
-                    <img src="images/gloves.jpg" alt="قفازات الملاكمة" class="img-box">
-                </div>
-            </div>
-
-            <!-- الصندوق الثاني -->
-            <div class="box">
-                <h3>⚠️ مخاطر وأضرار الملاكمة</h3>
-                <p>رغم شعبيتها، إلا أن للملاكمة جوانب سلبية ومخاطر صحية يجب أخذها بعين الاعتبار:</p>
-                <ul>
-                    <li><span class="danger">الإصابات الجسدية:</span> مثل الكدمات القوية، نزيف الأنف، وكسور في عظام اليد أو الوجه.</li>
-                    <li><span class="highlight">تأثير الضربات على الرأس:</span> قد تؤدي الضربات المتتالية إلى ارتجاج في المخ أو مشاكل صحية طويلة الأمد.</li>
-                    <li><span class="danger">الإجهاد البدني:</span> تتطلب الملاكمة مجهوداً عضلياً جباراً قد يؤدي إلى إرهاق القلب والمفاصل إذا لم تكن هناك راحة كافية.</li>
-                </ul>
-                <div class="img-container">
-                    <img src="images/boxer.jpg" alt="ملاكم مستعد" class="img-box">
-                </div>
-            </div>
-
-            <!-- الصندوق الثالث -->
-            <div class="box">
-                <h3>🌟 فوائد الملاكمة للجسم والعقل</h3>
-                <p><span class="benefit">بناء الشخصية:</span> تعلم الملاكم الصبر، الانضباط، والتحكم في النفس عند الغضب.</p>
-                <p><span class="highlight">اللياقة البدنية:</span> تعتبر من أفضل الرياضات لحرق السعرات الحرارية وتقوية عضلات الجسم والجهاز التنفسي.</p>
-                <p><span class="benefit">الدفاع عن النفس:</span> تمنح ممارسها مهارات قتالية فعالة جداً وثقة كبيرة بالنفس في مواجهة المخاطر.</p>
-                <div class="img-container">
-                    <img src="images/me1.jpg" alt="البطل عماد الدين يتدرب" class="img-box">
-                </div>
-            </div>
-
-            <!-- صندوق الباحث (صورة البطل) -->
-            <div class="box">
-                <h3>🏆 عن الباحث (البطل المستقبلي)</h3>
-                <p><span class="highlight">عماد الدين طواهرية</span>، باحث رياضي وطموح في عالم الملاكمة.</p>
-                <p>الرياضة بالنسبة لي ليست مجرد هواية، بل هي <span class="benefit">أسلوب حياة</span> يعلمنا الانضباط والإصرار على تحقيق الأهداف مهما كانت الصعاب.</p>
-                <div class="img-container">
-                    <img src="images/me2.jpg" alt="البطل عماد الدين" class="img-box">
-                </div>
-            </div>
-
-            <!-- الخاتمة -->
-            <div class="box conclusion">
-                <h3>🏁 خاتمة البحث</h3>
-                <p>الملاكمة هي مزيج بين القوة البدنية والذكاء التكتيكي، وهي مدرسة حقيقية في الأخلاق الرياضية.</p>
-            </div>
-
-        </div>
-    </div>
-
-</body>
+    <!-- الصندوق الرابع (صورة البطل) -->
+    <div class="box"> 
+        <h3 style="border-bottom-color: var(--neon-blue);">🏆 عن الباحث (البطل المستقبلي)</h3> 
+        <p class="white-text">عماد الدين طواهرية، باحث رياضي وطموح في عالم الملاكمة.</p> 
+        <p class="blue-text">الرياضة بالنسبة لي ليست مجرد هواية، بل هي أسلوب حياة يعلمنا الانضباط والإصرار على تحقيق الأهداف مهما كانت الصعاب.</p> 
+        <img src="images/me2.jpg" class="img-box" alt="البطل عماد الدين"> 
+    </div> 
+ 
+    <!-- الصندوق الخامس (الخاتمة) -->
+    <div class="box" style="animation: border-dance 3s infinite; text-align: center;"> 
+        <h3 style="border: none; margin-bottom: 0;">🏁 خاتمة البحث</h3> 
+        <p class="white-text" style="margin-top: 15px;">الملاكمة هي مزيج بين القوة البدنية والذكاء التكتيكي، وهي مدرسة حقيقية في الأخلاق الرياضية.</p> 
+    </div> 
+ 
+</body> 
 </html>
