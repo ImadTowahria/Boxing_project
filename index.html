@@ -3,420 +3,373 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عالم الملاكمة الاحترافي | عماد الدين طواهرية</title>
+    <title>عالم الملاكمة الاحترافي</title>
     <!-- استيراد خط تجوال العربي -->
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
     
     <style>
-        /* ================= المتغيرات الأساسية ================= */
+        /* المتغيرات الأساسية للألوان المحسنة */
         :root {
-            --primary: #d90429; /* أحمر دموي قوي */
-            --primary-glow: rgba(217, 4, 41, 0.6);
-            --dark: #0b090a;
-            --darker: #000000;
-            --light: #edf2f4;
-            --gold: #ffd700;
-            --gray: #8d99ae;
+            --primary-color: #e61025; /* أحمر أكثر سطوعاً وحيوية */
+            --primary-glow: rgba(230, 16, 37, 0.4);
+            --dark-bg: #0a0a0a; /* أسود عميق */
+            --card-bg: #141414; /* رمادي داكن للصناديق */
+            --gold-accent: #f5b700; /* ذهبي لامع */
+            --text-light: #ffffff;
+            --text-muted: #c2c2c2;
         }
 
-        /* ================= الإعدادات العامة ================= */
+        /* الإعدادات الأساسية */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Tajawal', sans-serif;
-            scroll-behavior: smooth;
         }
 
         body {
-            background-color: var(--darker);
-            color: var(--light);
-            line-height: 1.8;
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            line-height: 1.7;
             overflow-x: hidden;
+            /* خلفية بتدرج شعاعي أنيق يعطي عمقاً للصفحة */
+            background-image: radial-gradient(circle at 50% -10%, #290508 0%, var(--dark-bg) 60%);
+            background-attachment: fixed;
         }
 
-        /* ================= شريط التمرير (Scrollbar) ================= */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--darker);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--primary);
-            border-radius: 5px;
+        /* الحاوية الرئيسية */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 30px 20px;
         }
 
         /* ================= الحركات (Animations) ================= */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(50px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        
-        @keyframes pulse-border {
+
+        @keyframes pulse-glow {
             0% { box-shadow: 0 0 0 0 var(--primary-glow); }
-            70% { box-shadow: 0 0 0 20px rgba(217, 4, 41, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(217, 4, 41, 0); }
+            70% { box-shadow: 0 0 0 20px rgba(230, 16, 37, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(230, 16, 37, 0); }
         }
 
-        @keyframes floating {
+        @keyframes float-img {
             0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
+            50% { transform: translateY(-8px); }
             100% { transform: translateY(0px); }
         }
 
-        /* ================= القسم الرئيسي (Hero Section) ================= */
-        .hero {
-            position: relative;
-            min-height: 100vh;
+        /* ================= بطاقة الطالب ================= */
+        .student-card {
+            background: linear-gradient(135deg, var(--card-bg), #000000);
+            border-right: 5px solid var(--primary-color);
+            padding: 25px 30px;
+            border-radius: 15px;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            /* خلفية القسم الرئيسي بدمج صورة القفازات مع لون داكن */
-            background: linear-gradient(to bottom, rgba(0,0,0,0.7), var(--darker)), 
-                        url('images/gloves.jpg') center/cover fixed;
-            padding: 20px;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: radial-gradient(circle at center, transparent 0%, var(--darker) 100%);
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            max-width: 900px;
-            animation: fadeIn 1.5s ease-out;
-        }
-
-        /* بطاقة الطالب الأنيقة في الأعلى */
-        .student-badges {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 15px;
+            flex-direction: column;
+            gap: 12px;
             margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            border-top: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            animation: fadeUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
         }
 
-        .badge {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 10px 25px;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            transition: all 0.3s ease;
-        }
-        
-        .badge:hover {
-            border-color: var(--primary);
-            transform: translateY(-3px);
-            box-shadow: 0 0 15px var(--primary-glow);
-        }
-
-        .badge span { color: var(--primary); margin-left: 8px; }
-        .badge.gold span { color: var(--gold); }
-
-        .hero h1 {
-            font-size: 5rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-            text-shadow: 0 0 20px var(--primary-glow);
-            letter-spacing: 2px;
-        }
-
-        .hero h1 span {
-            color: var(--primary);
-        }
-
-        .hero p {
-            font-size: 1.5rem;
-            color: var(--gray);
-            max-width: 700px;
-            margin: 0 auto 40px;
-        }
-
-        .scroll-down {
-            display: inline-block;
-            color: var(--light);
-            text-decoration: none;
-            font-size: 1.2rem;
-            border: 2px solid var(--primary);
-            padding: 15px 40px;
-            border-radius: 50px;
-            transition: all 0.3s;
-            animation: pulse-border 2s infinite;
-            font-weight: bold;
-        }
-
-        .scroll-down:hover {
-            background: var(--primary);
-            color: white;
-        }
-
-        /* ================= أقسام المحتوى (العرض التقديمي) ================= */
-        .section {
-            padding: 100px 5%;
-            position: relative;
-        }
-
-        .section:nth-child(even) {
-            background-color: var(--dark);
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
+        .student-info p {
+            font-size: 1.15rem;
             display: flex;
             align-items: center;
-            gap: 60px;
-            flex-wrap: wrap;
+            gap: 12px;
         }
 
-        /* عكس الاتجاه في الأقسام الزوجية لتصميم عصري */
-        .section:nth-child(even) .container {
-            flex-direction: row-reverse;
+        .student-info span {
+            color: var(--text-muted);
         }
 
-        .content-box {
-            flex: 1;
-            min-width: 300px;
-            animation: fadeIn 1s ease-out;
-        }
-
-        .image-box {
-            flex: 1;
-            min-width: 300px;
-            position: relative;
-            animation: floating 6s ease-in-out infinite;
-        }
-
-        .image-box::before {
-            content: '';
-            position: absolute;
-            top: -15px; left: -15px; right: 15px; bottom: 15px;
-            border: 3px solid var(--primary);
-            border-radius: 20px;
-            z-index: 0;
-            transition: all 0.4s ease;
-        }
-
-        .section:nth-child(even) .image-box::before {
-            top: -15px; right: -15px; left: 15px; bottom: 15px;
-        }
-
-        .image-box:hover::before {
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: var(--primary-glow);
-        }
-
-        .image-box img {
-            width: 100%;
-            height: 450px;
-            object-fit: cover;
-            border-radius: 20px;
-            position: relative;
-            z-index: 1;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-            transition: transform 0.5s ease;
-        }
-
-        .image-box:hover img {
-            transform: scale(0.97);
-        }
-
-        /* نصوص الأقسام */
-        .content-box h2 {
-            font-size: 2.8rem;
-            color: var(--light);
-            margin-bottom: 25px;
-            position: relative;
-            display: inline-block;
-        }
-
-        .content-box h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            right: 0;
-            width: 60px;
-            height: 4px;
-            background: var(--primary);
-            border-radius: 2px;
-        }
-
-        .content-box p {
+        .student-info strong {
+            color: var(--gold-accent);
             font-size: 1.25rem;
-            color: var(--gray);
-            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(245, 183, 0, 0.2);
         }
 
-        .content-box ul {
+        /* ================= العنوان الرئيسي ================= */
+        h1 {
+            text-align: center;
+            font-size: 3.5rem;
+            color: var(--text-light);
+            margin: 50px 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            animation: fadeUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            animation-delay: 0.2s;
+            opacity: 0;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.5);
+        }
+
+        h1::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 5px;
+            background: var(--primary-color);
+            margin: 20px auto 0;
+            border-radius: 3px;
+            box-shadow: 0 0 15px var(--primary-color);
+        }
+
+        /* ================= شبكة المحتوى (الصناديق) ================= */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 35px;
+        }
+
+        .box {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 35px;
+            border: 1px solid rgba(255,255,255,0.03);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+
+        .box:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 25px 50px rgba(230, 16, 37, 0.15);
+            border-color: rgba(230, 16, 37, 0.4);
+        }
+
+        /* توقيت ظهور الصناديق بالتدريج */
+        .box:nth-child(1) { animation-delay: 0.4s; }
+        .box:nth-child(2) { animation-delay: 0.6s; }
+        .box:nth-child(3) { animation-delay: 0.8s; }
+        .box:nth-child(4) { animation-delay: 1.0s; }
+        .box:nth-child(5) { animation-delay: 1.2s; }
+
+        /* خط زينة علوي للصندوق يظهر عند التمرير */
+        .box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .box:hover::before {
+            opacity: 1;
+        }
+
+        h3 {
+            color: var(--primary-color);
+            font-size: 1.9rem;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .box p {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--text-muted);
+        }
+
+        /* ================= تمييز النصوص داخل الصناديق ================= */
+        .highlight {
+            color: var(--text-light);
+            font-weight: 800;
+            background: rgba(255,255,255,0.05);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .danger {
+            color: #ff4d4d;
+            font-weight: 800;
+        }
+
+        .benefit {
+            color: var(--gold-accent);
+            font-weight: 800;
+        }
+
+        /* ================= القوائم ================= */
+        ul {
             list-style: none;
             margin-top: 20px;
         }
 
-        .content-box ul li {
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-            padding-right: 35px;
+        ul li {
+            font-size: 1.15rem;
+            margin-bottom: 18px;
+            padding-right: 30px;
             position: relative;
-            color: var(--light);
+            color: var(--text-muted);
         }
 
-        .content-box ul li::before {
+        ul li::before {
             content: '🥊';
             position: absolute;
             right: 0;
             top: 2px;
-            font-size: 1.2rem;
+            font-size: 1rem;
+            filter: drop-shadow(0 0 2px rgba(230,16,37,0.5));
         }
 
-        /* الكلمات المميزة */
-        .highlight { color: white; font-weight: bold; background: rgba(217,4,41,0.2); padding: 0 5px; border-radius: 3px;}
-        .danger { color: var(--primary); font-weight: bold; }
-        .gold-text { color: var(--gold); font-weight: bold; }
+        /* ================= الصور ================= */
+        .img-container {
+            margin-top: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.6);
+            border: 2px solid rgba(255,255,255,0.05);
+            transition: border-color 0.4s ease;
+        }
+
+        .box:hover .img-container {
+            border-color: var(--primary-color);
+        }
+
+        .img-container::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            box-shadow: inset 0 0 25px rgba(0,0,0,0.6);
+            pointer-events: none;
+        }
+
+        .img-box {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+            animation: float-img 6s ease-in-out infinite;
+        }
+
+        /* إيقاف الطفو عند التمرير وتكبير الصورة بدلاً من ذلك */
+        .box:hover .img-box {
+            transform: scale(1.08);
+            animation-play-state: paused;
+        }
 
         /* ================= الخاتمة ================= */
-        .footer {
-            background: linear-gradient(0deg, #000, var(--dark));
-            padding: 80px 20px;
+        .conclusion {
             text-align: center;
-            border-top: 1px solid rgba(255,255,255,0.05);
+            background: linear-gradient(135deg, #4a050d, #1a0204);
+            border: 1px solid var(--primary-color);
+            color: white;
+            animation: fadeUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards, pulse-glow 3s infinite;
+            animation-delay: 1.2s; /* تأخير الدخول */
         }
 
-        .footer-content {
-            max-width: 800px;
-            margin: 0 auto;
-            background: rgba(217, 4, 41, 0.05);
-            padding: 40px;
-            border-radius: 20px;
-            border: 1px solid rgba(217, 4, 41, 0.2);
-            box-shadow: 0 0 30px rgba(217, 4, 41, 0.1);
+        .conclusion h3 {
+            color: white;
+            justify-content: center;
+            text-shadow: 0 0 15px var(--primary-glow);
         }
 
-        .footer h3 {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 20px;
-        }
-
-        .footer p {
+        .conclusion p {
+            color: rgba(255,255,255,0.95);
             font-size: 1.4rem;
             font-weight: bold;
         }
 
-        /* ================= التجاوب مع الشاشات (الهواتف) ================= */
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 3rem; }
-            .hero p { font-size: 1.2rem; }
-            .container { flex-direction: column !important; text-align: center; gap: 40px; }
-            .content-box h2::after { left: 0; margin: auto; }
-            .content-box ul li { text-align: right; }
-            .image-box img { height: 300px; }
+        /* ================= الشاشات الكبيرة ================= */
+        @media (min-width: 850px) {
+            .content-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .conclusion {
+                grid-column: 1 / -1;
+            }
+            /* جعل صندوق الباحث يأخذ عرضاً كاملاً إذا أردت، لكن تركناه في الشبكة ليكون متناسقاً */
         }
     </style>
 </head>
 <body>
 
-    <!-- الواجهة الرئيسية (Hero Section) -->
-    <header class="hero">
-        <div class="hero-content">
+    <div class="container">
+        <!-- بطاقة الطالب -->
+        <div class="student-card">
+            <div class="student-info">
+                <p>👤 <span>الاسم واللقب:</span> <strong>عماد الدين طواهرية</strong></p>
+                <p>🏫 <span>القسم:</span> <strong>أولى علوم 2</strong></p>
+                <p>🥊 <span>المشروع:</span> <strong>بحث مفصل حول رياضة الملاكمة</strong></p>
+            </div>
+        </div>
+
+        <h1>عالم الملاكمة الاحترافي</h1>
+
+        <div class="content-grid">
             
-            <div class="student-badges">
-                <div class="badge"><span>👤</span> عماد الدين طواهرية</div>
-                <div class="badge"><span>🏫</span> أولى علوم 2</div>
-                <div class="badge gold"><span>🏆</span> مشروع رياضي</div>
+            <!-- الصندوق الأول -->
+            <div class="box">
+                <h3>🥊 تعريف الملاكمة (الفن النبيل)</h3>
+                <p><span class="highlight">الملاكمة</span> هي رياضة قتالية عريقة تعتمد على استخدام القبضات فقط للدفاع والهجوم.</p>
+                <p>تتطلب هذه الرياضة <span class="danger">تركيزاً ذهنياً عالياً جداً</span>، حيث يجب على الملاكم قراءة حركات خصمه في أجزاء من الثانية.</p>
+                <div class="img-container">
+                    <img src="images/gloves.jpg" alt="قفازات الملاكمة" class="img-box">
+                </div>
             </div>
 
-            <h1>عالم الملاكمة <span>الاحترافي</span></h1>
-            <p>الفن النبيل: حيث تلتقي القوة البدنية بالذكاء التكتيكي، والانضباط بالإصرار للوصول إلى القمة.</p>
-            
-            <a href="#definition" class="scroll-down">ابدأ الاستكشاف ▼</a>
-        </div>
-    </header>
-
-    <!-- القسم الأول: التعريف -->
-    <section id="definition" class="section">
-        <div class="container">
-            <div class="content-box">
-                <h2>تعريف الملاكمة</h2>
-                <p><span class="highlight">الملاكمة (الفن النبيل)</span> هي رياضة قتالية عريقة تعتمد على استخدام القبضات فقط للدفاع والهجوم داخل حلبة مخصصة.</p>
-                <p>عكس ما يعتقده البعض، تتطلب هذه الرياضة <span class="danger">تركيزاً ذهنياً عالياً جداً</span>، حيث يجب على الملاكم قراءة حركات خصمه، التنبؤ بضرباته، والرد عليها في أجزاء من الثانية.</p>
-            </div>
-            <div class="image-box">
-                <img src="images/gloves.jpg" alt="قفازات الملاكمة">
-            </div>
-        </div>
-    </section>
-
-    <!-- القسم الثاني: المخاطر -->
-    <section class="section">
-        <div class="container">
-            <div class="content-box">
-                <h2>مخاطر وأضرار الرياضة</h2>
-                <p>رغم شعبيتها الواسعة وفوائدها، إلا أن للملاكمة جوانب سلبية ومخاطر صحية يجب أخذها بعين الاعتبار وتوخي الحذر منها:</p>
+            <!-- الصندوق الثاني -->
+            <div class="box">
+                <h3>⚠️ مخاطر وأضرار الملاكمة</h3>
+                <p>رغم شعبيتها، إلا أن للملاكمة جوانب سلبية ومخاطر صحية يجب أخذها بعين الاعتبار:</p>
                 <ul>
-                    <li><span class="danger">الإصابات الجسدية المباشرة:</span> مثل الكدمات القوية، نزيف الأنف، وكسور في عظام اليد أو الوجه.</li>
-                    <li><span class="highlight">تأثير الضربات على الرأس:</span> قد تؤدي الضربات المتتالية إلى ارتجاج في المخ أو مشاكل صحية تراكمية.</li>
-                    <li><span class="danger">الإجهاد البدني الشديد:</span> تتطلب الملاكمة مجهوداً عضلياً جباراً قد يؤدي إلى إرهاق المفاصل إذا لم تكن هناك راحة وتغذية كافية.</li>
+                    <li><span class="danger">الإصابات الجسدية:</span> مثل الكدمات القوية، نزيف الأنف، وكسور في عظام اليد أو الوجه.</li>
+                    <li><span class="highlight">تأثير الضربات على الرأس:</span> قد تؤدي الضربات المتتالية إلى ارتجاج في المخ أو مشاكل صحية طويلة الأمد.</li>
+                    <li><span class="danger">الإجهاد البدني:</span> تتطلب الملاكمة مجهوداً عضلياً جباراً قد يؤدي إلى إرهاق القلب والمفاصل إذا لم تكن هناك راحة كافية.</li>
                 </ul>
+                <div class="img-container">
+                    <img src="images/boxer.jpg" alt="ملاكم مستعد" class="img-box">
+                </div>
             </div>
-            <div class="image-box">
-                <img src="images/boxer.jpg" alt="ملاكم مستعد">
-            </div>
-        </div>
-    </section>
 
-    <!-- القسم الثالث: الفوائد -->
-    <section class="section">
-        <div class="container">
-            <div class="content-box">
-                <h2>فوائد الملاكمة للجسم والعقل</h2>
-                <p>الملاكمة ليست مجرد لكمات، بل هي مصنع للرجال وتبني الإنسان من الداخل قبل الخارج:</p>
-                <ul>
-                    <li><span class="gold-text">بناء الشخصية الصلبة:</span> تعلم الملاكم الصبر، الانضباط الشديد، والتحكم في النفس عند الغضب.</li>
-                    <li><span class="highlight">اللياقة البدنية الخارقة:</span> تعتبر من أفضل الرياضات لحرق السعرات وتقوية عضلة القلب والجهاز التنفسي.</li>
-                    <li><span class="gold-text">الدفاع عن النفس:</span> تمنح ممارسها مهارات قتالية فعالة جداً وثقة مطلقة بالنفس في مواجهة أي مخاطر.</li>
-                </ul>
+            <!-- الصندوق الثالث -->
+            <div class="box">
+                <h3>🌟 فوائد الملاكمة للجسم والعقل</h3>
+                <p><span class="benefit">بناء الشخصية:</span> تعلم الملاكم الصبر، الانضباط، والتحكم في النفس عند الغضب.</p>
+                <p><span class="highlight">اللياقة البدنية:</span> تعتبر من أفضل الرياضات لحرق السعرات الحرارية وتقوية عضلات الجسم والجهاز التنفسي.</p>
+                <p><span class="benefit">الدفاع عن النفس:</span> تمنح ممارسها مهارات قتالية فعالة جداً وثقة كبيرة بالنفس في مواجهة المخاطر.</p>
+                <div class="img-container">
+                    <img src="images/me1.jpg" alt="البطل عماد الدين يتدرب" class="img-box">
+                </div>
             </div>
-            <div class="image-box">
-                <img src="images/me1.jpg" alt="البطل عماد الدين يتدرب">
-            </div>
-        </div>
-    </section>
 
-    <!-- القسم الرابع: عن الباحث (أنت) -->
-    <section class="section">
-        <div class="container">
-            <div class="content-box">
-                <h2>عن الباحث (البطل المستقبلي)</h2>
-                <p><span class="highlight">عماد الدين طواهرية</span>، باحث رياضي شغوف وطموح في عالم الملاكمة.</p>
-                <p>بالنسبة لي، الرياضة ليست مجرد هواية نمارسها في وقت الفراغ، بل هي <span class="gold-text">أسلوب حياة كامل</span> يعلمنا الانضباط، الالتزام، والإصرار على تحقيق الأهداف مهما كانت الحلبة صعبة.</p>
-                <p>هذا البحث هو انعكاس لشغفي بـ "الفن النبيل"، ورسالتي لكل شاب بأن القوة الحقيقية تبدأ من العقل.</p>
+            <!-- صندوق الباحث (صورة البطل) -->
+            <div class="box">
+                <h3>🏆 عن الباحث (البطل المستقبلي)</h3>
+                <p><span class="highlight">عماد الدين طواهرية</span>، باحث رياضي وطموح في عالم الملاكمة.</p>
+                <p>الرياضة بالنسبة لي ليست مجرد هواية، بل هي <span class="benefit">أسلوب حياة</span> يعلمنا الانضباط والإصرار على تحقيق الأهداف مهما كانت الصعاب.</p>
+                <div class="img-container">
+                    <img src="images/me2.jpg" alt="البطل عماد الدين" class="img-box">
+                </div>
             </div>
-            <div class="image-box">
-                <img src="images/me2.jpg" alt="البطل عماد الدين">
-            </div>
-        </div>
-    </section>
 
-    <!-- الخاتمة -->
-    <footer class="footer">
-        <div class="footer-content">
-            <h3>🏁 خاتمة البحث</h3>
-            <p>الملاكمة هي مزيج مثالي بين القوة البدنية والذكاء التكتيكي.<br>إنها مدرسة حقيقية في الأخلاق الرياضية واحترام الخصم.</p>
+            <!-- الخاتمة -->
+            <div class="box conclusion">
+                <h3>🏁 خاتمة البحث</h3>
+                <p>الملاكمة هي مزيج بين القوة البدنية والذكاء التكتيكي، وهي مدرسة حقيقية في الأخلاق الرياضية.</p>
+            </div>
+
         </div>
-    </footer>
+    </div>
 
 </body>
 </html>
